@@ -1,0 +1,66 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+buildscript {
+    ext {
+        springBootVersion = '1.5.4.RELEASE'
+
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven {
+            url "http://jcenter.bintray.com"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
+    }
+}
+
+group 'sdr-svc'
+version '1.0-SNAPSHOT'
+
+ext.ecr_repo_name = "ctp-svc"
+
+apply plugin: 'application'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+mainClassName = 'com.sed.pms.sdr.SuplierDetailsApplication'
+
+jar {
+    group = 'com.sed.pms.sdr'
+    baseName = 'sdr-svc'
+    version = '0.0.1-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        url "http://jcenter.bintray.com"
+    }
+}
+
+dependencies {
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.8'
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-configuration-processor')
+    compile('org.springframework.boot:spring-boot-starter-data-cassandra')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
+    }
+}
+
+
